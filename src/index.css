@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-display: 'Big Shoulders Display', 'Arial Narrow', sans-serif;
+  --font-sans: 'Instrument Sans', system-ui, sans-serif;
+}
+
+/* Lets Tailwind use the theme variables: bg-bg, text-fg, text-muted, border-line, bg-surface */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+}
+
+@layer base {
+  :root {
+    --bg: #f2f2f2;
+    --fg: #000000;
+    --muted: #6b6b6b;
+    --line: rgb(0 0 0 / 0.12);
+    --surface: #ffffff;
+  }
+
+  .dark {
+    --bg: #000000;
+    --fg: #f2f2f2;
+    --muted: #8a8a8a;
+    --line: rgb(255 255 255 / 0.14);
+    --surface: #1c1c1c;
+  }
+
+  html {
+    background: var(--bg);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--fg);
+    transition:
+      background-color 0.5s ease,
+      color 0.5s ease;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--fg);
+    outline-offset: 3px;
+  }
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes info-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.card-in {
+  animation: card-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: calc(var(--i) * 90ms);
+}
+
+.info-in {
+  animation: info-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
